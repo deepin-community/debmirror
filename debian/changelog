@@ -1,3 +1,33 @@
+debmirror (1:2.47+deb13u1) trixie; urgency=medium
+
+  [ Raphaël Halimi ]
+  * Add debmirror-specific User-Agent header (closes: #1135891).
+
+ -- Colin Watson <cjwatson@debian.org>  Thu, 07 May 2026 11:47:09 +0100
+
+debmirror (1:2.47) unstable; urgency=medium
+
+  [ Colin Watson ]
+  * Refresh mirror_size documentation.
+
+  [ Christoph Goehre ]
+  * Create directories for installer before using them (closes: #1108274).
+
+ -- Colin Watson <cjwatson@debian.org>  Tue, 01 Jul 2025 00:58:44 +0100
+
+debmirror (1:2.46) unstable; urgency=medium
+
+  * Add a simple autopkgtest.
+
+ -- Colin Watson <cjwatson@debian.org>  Fri, 30 May 2025 01:20:12 +0100
+
+debmirror (1:2.45) unstable; urgency=medium
+
+  [ Sascha Lucas ]
+  * Add support for Ubuntu ESMApps.
+
+ -- Colin Watson <cjwatson@debian.org>  Fri, 09 May 2025 14:00:01 +0100
+
 debmirror (1:2.44) unstable; urgency=medium
 
   * Hide HTTP(S) credentials from progress output (closes: #1104091).

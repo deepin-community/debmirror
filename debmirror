@@ -927,6 +927,7 @@ sub init_connection {
 
   downloads_via_http() && do {
     $ua = LWP::UserAgent->new(keep_alive => 1);
+    $ua->agent("debmirror/$version");
     $ua->timeout($timeout);
     $ua->proxy('http', $ENV{http_proxy}) if $ENV{http_proxy};
     $ua->proxy('http', $proxy) if $proxy;
@@ -941,6 +942,7 @@ sub init_connection {
   downloads_via_https() && do {
     $ua = LWP::UserAgent->new(keep_alive => 1, ssl_opts => {
                     verify_hostname => ! $disable_ssl_verification });
+    $ua->agent("debmirror/$version");
     $ua->timeout($timeout);
     $ua->proxy('https', $ENV{https_proxy}) if $ENV{https_proxy};
     $ua->proxy('https', $proxy) if $proxy;
@@ -956,6 +958,7 @@ sub init_connection {
   downloads_via_ftp() && do {
     if ($proxy || $ENV{ftp_proxy}) {
       $ua = LWP::UserAgent->new;
+      $ua->agent("debmirror/$version");
       $ua->timeout($timeout);
       $ua->proxy('ftp', $proxy ? $proxy : $ENV{ftp_proxy});
     }
@@ -972,6 +975,7 @@ sub init_connection {
 
   downloads_via_file() && do {
     $ua = LWP::UserAgent->new;
+    $ua->agent("debmirror/$version");
     $ua->timeout($timeout);
     $ua->show_progress($progress);
     $host='localhost';
@@ -2388,7 +2392,7 @@ sub name_release {
 
   if ($origin eq "none") {
     $codename = $dist_raw;
-  } elsif ($origin eq "Ubuntu" or $origin eq "Canonical" or $origin eq "UbuntuESM") {
+  } elsif ($origin eq "Ubuntu" or $origin eq "Canonical" or $origin eq "UbuntuESM" or $origin eq "UbuntuESMApps") {
     if ($suite) {
       say("Ubuntu Release file: using Suite ($suite).");
       $codename = $suite;
@@ -3078,6 +3082,8 @@ sub di_get_files {
 
   foreach my $image_dir (sort keys %di_files) {
     my $lres = 1;
+    make_dir ("$tdir/$image_dir");
+    make_dir ("$image_dir");
     foreach my $file (sort keys %{ $di_files{$image_dir} }) {
       next unless $di_files{$image_dir}{$file}{status} == 0;
       # Fetch images into a temporary location
